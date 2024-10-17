@@ -1,0 +1,62 @@
+spring:
+  autoconfigure.exclude:
+    - org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConfiguration
+    # - org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration
+    # - org.springframework.boot.actuate.autoconfigure.security.servlet.ManagementWebSecurityAutoConfiguration
+  codec.max-in-memory-size: 30MB
+  datasource:
+    url: jdbc:postgresql://localhost:5432/postgres
+    username: postgres
+    password: admin
+  jpa:
+    hibernate.ddl-auto: create-drop
+    properties.hibernate.format_sql: true
+    show-sql: true
+  mvc.throw-exception-if-no-handler-found: true
+  servlet.multipart.max-file-size: 30MB
+
+com.github.d4rk3on.support:
+  aspect.logging.enabled: true
+  filters:
+    request-id.enabled: true
+    audit:
+      web.enabled: true
+      web-client.enabled: true
+  security:
+    cors-max-age: 1800
+    expiration-milliseconds: 300000
+    enabled: true
+    jwt-secret: bcc12e19634a4a348c7552124b94eb6f19634a4a348c75
+  web-client:
+    connection-timeout: 30000 # 30s || Def. 15s
+    max-in-memory-size: 31457280 # 30MB -> 1024*1024*30 || Def. 10MB
+
+management:
+  endpoint:
+    health.show-details: always
+    prometheus.enabled: true
+  endpoints.web:
+    base-path: /actuator
+    exposure.include: [ "health", "info", "metrics", "prometheus" ]
+  metrics.export.prometheus.enabled: true
+
+springdoc:
+  api-docs.enabled: true
+  default-produces-media-type: application/json
+  info:
+    title: '@project.name@'
+    description: '@project.description@'
+    version: '@project.version@'
+  packages-to-scan: com.github.d4rk3on
+  swagger-ui:
+    enabled: true
+    disable-swagger-default-url: true
+    operations-sorter: method
+    show-extensions: true
+    tags-sorter: alpha
+  writer-with-order-by-keys: true
+
+http.clients:
+  json-placeholder:
+    url: https://jsonplaceholder.typicode.com
+    photo-albums-endpoint: /photos
